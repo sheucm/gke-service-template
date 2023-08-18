@@ -30,7 +30,7 @@ def get_config(
     override_fpath = config_dpath / f"{config_type}-{env}.yaml"
     if override_fpath.is_file():
         with open(override_fpath, "r", encoding="utf-8") as f:
-            override_config = yaml.load(f, Loader=yaml.FullLoader)
+            override_config = yaml.load(f, Loader=yaml.FullLoader) or {}
             return merge_config(base_config, override_config)
     else:
         return base_config

@@ -5,12 +5,12 @@ import schedule
 import pandas as pd
 from fastapi import FastAPI
 from myapp.configs import app_config
-from myapp.common.constants import MySettings
+from myapp.common.constants import MY_VAR
 from myapp.endpoints import (
   version,
   foo_endpoint,
 )
-from myapp.controller import (
+from myapp.controllers import (
   foo_controller,
 )
 
