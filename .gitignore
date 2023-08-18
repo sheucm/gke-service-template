@@ -1,0 +1,7 @@
+*.log
+*.pyc
+.vscode/*
+*.ipynb
+**/.ipynb_checkpoints/*
+test.py
+.coverage

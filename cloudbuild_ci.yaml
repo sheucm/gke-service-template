@@ -1,0 +1,45 @@
+steps:
+  - name: gcr.io/cloud-builders/docker
+    id: Build CI Image
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        docker build \
+        -t us-west1-docker.pkg.dev/$PROJECT_ID/gke-service-sample:ci \
+        -f dockerfile.ci
+
+  - name: us-west1-docker.pkg.dev/$PROJECT_ID/gke-service-sample:ci
+    entrypoint: bash
+    id: black check
+    args:
+      - -c
+      - |
+        black . --check
+  
+  - name: us-west1-docker.pkg.dev/$PROJECT_ID/gke-service-sample:ci
+    ntrypoint: bash
+    id: pylint check
+    args:
+      - -c
+      - |
+        pylint src
+    
+  - name: us-west1-docker.pkg.dev/$PROJECT_ID/gke-service-sample:ci
+    ntrypoint: bash
+    id: pytest check
+    args:
+      - -c
+      - |
+        pytest
+
+timeout: 600s
+logsBucket: 'gs://$PROJECT_ID-default-bucket/build-logs'
+serviceAccount: 'projects/$PROJECT_ID/serviceAccounts/shared-service-account@$PROJECT_ID.iam.gserviceaccount.com'
+substitutions: 
+  _ENV: dev
+options:
+  substitution_option: 'ALLOW_LOOSE'
+  dynamic_substitutions: true
+  pool:
+    name: 'projects/gdw-${_ENV}-shared-services/locations/us-west1/workerPools/us-west1-${_ENV}-pool'

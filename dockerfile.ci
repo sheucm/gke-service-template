@@ -1,0 +1,16 @@
+FROM python:3.9
+
+WORKDIR /workspace/gke-service-sasmple
+
+COPY . .
+
+ENV CA_BUNDLE=/workspace/gke-service-sasmple/ca-certificates.crt
+ENV REQUESTS_CA_BUNDLE=${CA_BUNDLE}
+ENV CURL_CA_BUNDLE=${CA_BUNDLE}
+ENV HTTPLIB2_CA_CERTS=${CA_BUNDLE}
+ENV CA_CERTS_PATH=${CA_BUNDLE}
+
+RUN pip3 install --upgrade pip 
+RUN pip3 install poetry==1.4.0
+RUN poetry config virtualenvs.create false
+RUN poetry install

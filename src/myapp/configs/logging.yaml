@@ -1,0 +1,16 @@
+handlers:
+  cloud-logging:
+    level: INFO
+    enable: true
+loggers:
+  myapp:
+    level: INFO
+    handlers: [console, cloud-logging]
+    propagate: false
+  uvicorn:
+    level: INFO
+    handlers: [console]
+    propagate: false
+root:
+  level: INFO
+  propagate: false

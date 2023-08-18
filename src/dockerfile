@@ -1,0 +1,18 @@
+FROM google/cloud-sdk:427.0.0-slim
+
+WORKDIR /home/cloudsdk
+ARG _ENV=dev
+RUN pip3 install --upgrade pip 
+ADD myapp myapp
+
+ENV ENV=${_ENV}
+ENV CA_BUNDLE=/workspace/gke-service-sasmple/ca-certificates.crt
+ENV REQUESTS_CA_BUNDLE=${CA_BUNDLE}
+ENV CURL_CA_BUNDLE=${CA_BUNDLE}
+ENV HTTPLIB2_CA_CERTS=${CA_BUNDLE}
+ENV CA_CERTS_PATH=${CA_BUNDLE}
+
+RUN pip3 install -r myapp/requirements.txt --default-timeout=1000
+EXPOSE 3033
+ENTRYPOINT ["bash"]
+CMD ["myapp/bootstrap.sh"]

@@ -1,0 +1,12 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'us-west1-docker.pkg.dev/$PROJECT_ID/gke/myapp:$TAG_NAME', '--build-arg=_ENV=$_ENV', '.']
+images:
+  - 'us-west1-docker.pkg.dev/$PROJECT_ID/gke/myapp:$TAG_NAME'
+serviceAccount: 'projects/$PROJECT_ID/serviceAccounts/shared-service-account@$PROJECT_ID.iam.gserviceaccount.com'
+logsBucket: 'gs://$PROJECT_ID-default-bucket/build-logs'
+substitutions:
+  _ENV: dev
+options:
+  pool:
+    name: projects/gdw-$_ENV-shared-services/locations/us-west1/workerPools/us-west1-$_ENV-pool

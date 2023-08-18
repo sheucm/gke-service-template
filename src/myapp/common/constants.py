@@ -1,0 +1,1 @@
+MY_VAR: str = "Hello World"
