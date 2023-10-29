@@ -46,3 +46,4 @@ http://localhost:3033/docs
 
 # CA Certificate File
 If your environment requires CA certificate, please copy the file to `gke-service-sasmple/` from `/etc/ssl/certs/ca-certificates.crt` from your VM.
+
